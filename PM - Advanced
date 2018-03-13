@@ -1,0 +1,190 @@
+#Projectile Motion Advanced
+
+import math #imports math module
+import sys #imports sys module
+
+
+#Asking for Known Variables
+#Initial velocity and input validation
+v0 = input("Is initial velocity known? (y/n): ")
+v0 = v0.lower() #converts to lowercase in case user types in capital letter
+while v0 != "yes" and v0 != "y" and v0 != "no" and v0 != "n": #while loop
+    print("Not applicable")
+    v0 = input("Is initial velocity known? (y/n): ")
+    v0 = v0.lower()
+if v0 == "yes" or v0 == "y": #if statement
+    v0 = input("Initial velocity = ")
+    while v0.isdigit() == False: #checks if input is actually a digit
+        print("Please only enter a number")
+        v0 = input("Initial velocity = ")
+
+
+
+#Theta and input validation
+θ = input("Is angle measure known? (y/n): ")
+θ = θ.lower()
+while θ != "yes" and θ != "y" and θ != "no" and θ != "n":
+    print("Not applicable")
+    θ = input("Is angle measure known? (y/n): ")
+    θ = θ.lower()
+if θ == "yes" or θ == "y":
+    θ = input("Angle measure = ") #angle measure
+    while θ.isdigit() == False:
+        print("Please only enter a number")
+        θ = input("Angle measure = ")
+
+
+#initializes because program has no need to prompt for components as it can be solved
+if v0.isdigit() == True and θ.isdigit() == True:
+    v0x = "Solve"
+    v0y = "Solve"
+
+
+#Initial velocity Y and input validation
+if v0.isdigit() == False and θ.isdigit() == False or v0.isdigit() == False and θ.isdigit() == True or v0.isdigit() == True and θ.isdigit() == False:
+    v0y = input("Is initial velocity in the y known? (y/n): ")
+    v0y = v0y.lower()
+    while v0y != "yes" and v0y != "y" and v0y != "no" and v0y != "n":
+        print("Not applicable")
+        v0y = input("Is initial velocity in the y known? (y/n): ")
+        v0y = v0y.lower()
+    if v0y == "yes" or v0y == "y": #relational operators
+        v0y = input("Initial velocity in the Y = ") #initial velocity Y
+        while v0y.isdigit() == False:
+            print("Please only enter a number")
+            v0y = input("Initial velocity in the Y = ")
+
+
+
+#Initial velocity X and input validation
+if not(v0.isdigit() == True and v0y.isdigit() == True) and not(θ.isdigit() == True and v0y.isdigit() == True) and not(v0.isdigit() == True and θ.isdigit() == True):  
+    v0x = input("Is initial velocity in the x known? (y/n): ")
+    v0x = v0x.lower()
+    while v0x != "yes" and v0x != "y" and v0x != "no" and v0x != "n":
+        print("Not applicable")
+        v0x = input("Is initial velocity in the x known? (y/n): ")
+        v0x = v0x.lower()
+    if v0x == "yes" or v0x == "y":
+        v0x = input("Initial velocity in the X = ") #initial velocity X
+        while v0x.isdigit() == False:
+           print("Please only enter a number")
+           v0x = input("Initial velocity in the X = ")
+
+
+#initializes because program has no need to prompt for components as it can be solved
+if (v0.isdigit() == True and v0y.isdigit() == True) or (θ.isdigit() == True and v0y.isdigit() == True):
+    v0x = "Solve"
+
+#Height and input validation
+h = input("Is height known? (y/n): ")
+h = h.lower()
+while h != "yes" and h != "y" and h != "no" and h != "n": #analyzes string to see if user knows the input
+    print("Not applicable")
+    h = input("Is height known? (y/n): ")
+    h = h.lower()
+if h == "yes" or h == "y":
+    h = input("Height = ")#height
+    while h.isdigit() == False:
+        print("Please only enter a number")
+        h = input("Height = ")
+    h = float(h)
+else: #else statement
+    print("Not enough values to solve for results")
+    sys.exit()
+
+
+
+#Cannot solve for results
+if v0.isdigit() == False and θ.isdigit() == False and v0y.isdigit() == False: #Boolean variables/operators
+    print("Not enough values to solve for results")
+    sys.exit()
+
+if v0.isdigit() == False and θ.isdigit() == False and v0x.isdigit() == False:
+    print("Not enough values to solve for results")
+    sys.exit()
+
+if θ.isdigit() == False and v0x.isdigit() == False and v0y.isdigit() == False: 
+    print("Not enough values to solve for results")
+    sys.exit()
+
+if v0.isdigit() == False and v0y.isdigit() == False and v0x.isdigit() == False:
+    print("Not enough values to solve for results")
+    sys.exit()
+
+if v0.isdigit() == False and θ.isdigit() == False and v0y.isdigit() == False and v0x.isdigit() == False:
+    print("Not enough values to solve for results")
+    sys.exit()
+
+
+
+#distance function
+def distance (t, v0x):
+    x = float(v0x)*t
+    return x
+
+#function that solves for final velocity
+def final_velocity(v0x, v0y, t):
+    x = float(v0x)
+    y = float(v0y) - 9.8*t
+    final = math.sqrt(x**2 + y**2)
+    return final
+
+#time function
+def time (a, b, c):
+    a = 4.9
+    b = -float(v0y)
+    c = -float(h)
+    result1 = (-b + math.sqrt(b**2 - 4*a*c)) / (2*a)
+    result2 = (-b - math.sqrt(b**2 - 4*a*c)) / (2*a)
+    if result1 > 0:
+        return result1
+    return result2
+
+#vector component function
+def velocity_x(v0, v0y, θ):
+    if v0.isdigit() == True and θ.isdigit() == True:
+        v0x = float(v0) * math.cos(math.radians(float(θ)))
+        return v0x
+    elif v0.isdigit() == True and v0y.isdigit() == True:
+        v0x = math.sqrt(float(v0)**2 - float(v0y)**2)
+        return v0x
+    else:
+        v0x = float(v0y) / math.tan(math.radians(float(θ)))
+        return v0x
+    
+def velocity_y(v0, v0x, θ):
+    if v0.isdigit() == True and θ.isdigit() == True:
+        v0y = float(v0) * math.sin(math.radians(float(θ)))
+        return v0y
+    elif v0.isdigit() == True and v0x.isdigit() == True:
+        v0y = math.sqrt(float(v0)**2 - float(v0x)**2)
+        return v0y
+    else:
+        v0y = float(v0x)*math.tan(math.radians(float(θ)))
+        return v0y
+
+#max height function
+def max_h(v0y):
+    h = -(float(v0y))**2 / -19.6 #local variable
+    return h
+
+
+
+#components
+if v0x.isdigit() == False:
+    v0x = velocity_x(v0, v0y, θ)
+if v0y.isdigit() == False:
+    v0y = velocity_y(v0, v0x, θ)
+
+
+
+#final answers
+t = time(4.9, v0y, h) #time
+vf = final_velocity(v0x, v0y, t) #final velocity
+x = distance(t, v0x) #distance traveled
+max_height = max_h(v0y) #max height
+
+print("Distance travelled: %1.2f" %x, "m") #formatting specifier
+print("Final velocity: %9.2f" % vf, "m/s")
+print("Maximum height: %9.2f" % max_height, "m")
+print("Time: %18.2f" % t, "s")
